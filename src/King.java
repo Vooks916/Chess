@@ -12,8 +12,6 @@ public class King extends Piece {
 
     public boolean isValidMove() {
         //King can move one space in any direction
-        //TRY TO ADD CASTLING IN FUTURE
-
         //If king is trying to castle
         if ((Math.abs(this.xPos - this.xPosToMove) == 2) && (Math.abs(this.yPos - this.yPosToMove) == 0)) {
             if (canCastle()) {
@@ -294,6 +292,7 @@ public class King extends Piece {
     }
 
     private boolean kingCheck() {
+        //This method is used in the isCheckAfterMove function, do not remove even though it is not possible for a king to check a king
         int kingX = this.getXPos();
         int kingY = this.getYPos();
         int x;
@@ -348,9 +347,8 @@ public class King extends Piece {
         //If a check is coming from any direction, return true
         if (upDownCheck() || leftRightCheck() || rightDiagnalCheck() || leftDiagnalCheck() || knightCheck() || kingCheck() || pawnCheck()) {
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     private boolean canCastle() {
@@ -398,7 +396,6 @@ public class King extends Piece {
         int originalXPosToMove = this.xPosToMove;
 
         if (this.xPos > this.xPosToMove) {
-            //preset the variables to be ready for the for loop
             this.xPosToMove = this.xPos - 1;
             if (GamePlay.isInCheckAfterMove(this)) {
                 this.xPos = originalXPos;
@@ -406,7 +403,6 @@ public class King extends Piece {
                 return false;
             }
         } else {
-            //preset the variables to be ready for the for loop
             this.xPosToMove = this.xPos + 1;
             if (GamePlay.isInCheckAfterMove(this)) {
                 this.xPos = originalXPos;
