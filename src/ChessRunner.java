@@ -48,6 +48,10 @@ public class ChessRunner {
 
             while (true) { //Get player's move and double check that it is correct
                 pieceToMove = game.getMove(player);
+
+                if (pieceToMove == null) {
+                    break;
+                }
                 pieceName = pieceToMove.toString();
                 currentLocation = pieceToMove.currentLocationToString();
                 locationToMove = pieceToMove.locationToMoveToString();
@@ -79,6 +83,22 @@ public class ChessRunner {
             }
 
             System.out.println(""); //just adds a little white space
+
+            if (GamePlay.resigned == true) {
+                GamePlay.resigned = false;
+                String winner = "White";
+                String loser = "Black";
+
+                if (player == 'W') {
+                    winner = "Black";
+                    loser = "White";
+                }
+
+                System.out.println(loser + " resigned.");
+                System.out.println(winner + " wins!");
+                System.out.println("");
+                break;
+            }
 
             xPosToMove = pieceToMove.getXPosToMove();
             yPosToMove = pieceToMove.getYPosToMove();

@@ -5,6 +5,7 @@ public class GamePlay {
     public static Piece[][] board;
     private static boolean movedViaEnPassant = false; //used on the rare occasion en passant actually happens
     private static boolean castledLastMove = false; //Used when a player castles to allow the rook to move as well
+    public static boolean resigned = false;
     
     public void resetBoard() {
         //Make a clear board
@@ -293,7 +294,7 @@ public class GamePlay {
     }
 
     public boolean isProperLocation(String playerInput, Piece pieceToMove) {
-        int charToInt; //Used as a placeholder when converting a char to and int
+        int charToInt; //Used as a placeholder when converting a char to an int
         int xLocation;
         int yLocation;
 
@@ -371,9 +372,42 @@ public class GamePlay {
         boolean resetLoop = false;
 
         System.out.println("Which piece would you like to move? (Ex. e2 or e2 e4)");
+        System.out.println("You can type \"help\" at any time to view more turn options");
         playerInput = scnr.nextLine();
         playerInput = playerInput.replaceAll(" ", ""); //remove all spaces
         while (true) { //Get player input
+            if (playerInput.toLowerCase().equals("resign")) {
+                //RESIGN IS BROKEN IF FIRST INPUT IS INVALID
+                System.out.println("Are you sure you want to resign? (y/n)");
+
+                while (true) {  //Input validation
+                    playerInput = scnr.nextLine();
+                    playerInput = playerInput.toLowerCase();
+                    if (playerInput.length() < 1) {
+                        System.out.println("Please enter either 'y' or 'n'");
+                        continue;
+                    }
+        
+                    if (playerInput.charAt(0) != 'y' && playerInput.charAt(0) != 'n') {
+                        System.out.println("Please enter either 'y' or 'n'");
+                        continue;
+                    }
+        
+                    break;
+                }
+        
+                if (playerInput.charAt(0) == 'y') {
+                    GamePlay.resigned = true;
+                    pieceToMove = null;
+                    break; //will return pieceToMove = null;
+                }
+
+                //Get new input if they don't want to resign
+                System.out.println("Which piece would you like to move? (Ex. e2 or e2 e4)");
+                playerInput = scnr.nextLine();
+                playerInput = playerInput.replaceAll(" ", ""); //remove all spaces
+                continue;
+            }
             if (playerInput.length() == 2) { //user only gave piece to move
                 pieceToMoveInput = playerInput;
                 locationToMoveInput = null; //resets this variable in case it has been initialized in a previous loop
@@ -512,7 +546,7 @@ public class GamePlay {
 
         isInCheck = playerKing.isInCheck();
 
-        //return piece back to original position
+        //return piece back to original position (Updates values in piece class, do not remove)
         pieceToMove.movePiece(originalXPos, originalYPos);
 
         //return board back to normal
@@ -567,8 +601,6 @@ public class GamePlay {
                     piece.yPosToMove = y;
                     for (int x = 0; x < 8; x++) {
                         piece.xPosToMove = x;
-                        //***I don't remember why I wrote this comment, isValidMove should do this for me:*** 
-                        //  Need to check for collisions with other pieces
                         if (!piece.isValidMove()) { //Skip if the move is not legal
                             continue;
                         }
@@ -599,8 +631,6 @@ public class GamePlay {
                     piece.setYPosToMove(y);
                     for (int x = 0; x < 8; x++) {
                         piece.setXPosToMove(x);
-                        //***I don't remember why I wrote this comment, isValidMove should do this for me:*** 
-                        //  Need to check for collisions with other pieces
                         if (piece.isValidMove()) { //Find a legal move
                             if (board[y][x] != null) { //Don't get a null pointer exception error
                                 if (board[y][x].getColor() != color) { //Make sure the piece isn't taking its own color
