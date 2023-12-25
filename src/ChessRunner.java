@@ -26,12 +26,10 @@ public class ChessRunner {
         
         while (true) {
             if (game.isCheckmate(player)) {
-                String winner;
+                String winner = "White";
 
                 if (player == 'W') {
                     winner = "Black";
-                } else {
-                    winner = "White";
                 }
 
                 System.out.println("Checkmate!");
@@ -47,8 +45,11 @@ public class ChessRunner {
             }
 
             while (true) { //Get player's move and double check that it is correct
-                //Check for checkmate and stalemate here eventually
                 pieceToMove = game.getMove(player);
+
+                if (pieceToMove == null) {
+                    break;
+                }
                 pieceName = pieceToMove.toString();
                 currentLocation = pieceToMove.currentLocationToString();
                 locationToMove = pieceToMove.locationToMoveToString();
@@ -81,6 +82,22 @@ public class ChessRunner {
 
             System.out.println(""); //just adds a little white space
 
+            if (GamePlay.resigned == true) {
+                GamePlay.resigned = false;
+                String winner = "White";
+                String loser = "Black";
+
+                if (player == 'W') {
+                    winner = "Black";
+                    loser = "White";
+                }
+
+                System.out.println(loser + " resigned.");
+                System.out.println(winner + " wins!");
+                System.out.println("");
+                break;
+            }
+
             xPosToMove = pieceToMove.getXPosToMove();
             yPosToMove = pieceToMove.getYPosToMove();
 
@@ -97,6 +114,7 @@ public class ChessRunner {
             pieceToMove.movePiece(xPosToMove, yPosToMove);
             pieceToMove.hasMoved = true;
             GamePlay.setCastleStatus(false); //This was a super painful bug. Do not remove!
+            GamePlay.setEnPassantStatus(false); //Probably don't need this, but adding it because of the bug stated above
 
             if (pieceToMove.toString().equals("pawn")) {
                 if (pieceToMove.getColor() == 'W' && pieceToMove.getYPos() == 7) {
