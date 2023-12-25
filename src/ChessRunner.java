@@ -26,12 +26,10 @@ public class ChessRunner {
         
         while (true) {
             if (game.isCheckmate(player)) {
-                String winner;
+                String winner = "White";
 
                 if (player == 'W') {
                     winner = "Black";
-                } else {
-                    winner = "White";
                 }
 
                 System.out.println("Checkmate!");
