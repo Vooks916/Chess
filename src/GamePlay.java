@@ -450,7 +450,7 @@ public class GamePlay {
                     if (playerInput.length() == 2) {
                         locationToMoveInput = playerInput;
                         isProperLocation = isProperLocation(locationToMoveInput, pieceToMove);
-                    } else if (playerInput.length() == 4) {
+                    } else if (playerInput.length() == 4 || playerInput.toLowerCase().equals("resign")) {
                         resetLoop = true;
                         break; //Goes back to the top of the while true loop to start the process over
                     } else {
@@ -473,7 +473,7 @@ public class GamePlay {
                 while (pieceToMove == null) {
                     playerInput = scnr.nextLine();
                     playerInput = playerInput.replaceAll(" ", ""); //remove all spaces
-                    if (playerInput.length() == 2 || playerInput.length() == 4) {
+                    if (playerInput.length() == 2 || playerInput.length() == 4 || playerInput.toLowerCase().equals("resign")) {
                         resetLoop = true;
                         break;
                     } else {
@@ -494,7 +494,7 @@ public class GamePlay {
                     if (playerInput.length() == 2) {
                         locationToMoveInput = playerInput;
                         isProperLocation = isProperLocation(locationToMoveInput, pieceToMove);
-                    } else if (playerInput.length() == 4) {
+                    } else if (playerInput.length() == 4 || playerInput.toLowerCase().equals("resign")) {
                         resetLoop = true;
                         break; //Goes back to the top of the while true loop to start the process over
                     }
