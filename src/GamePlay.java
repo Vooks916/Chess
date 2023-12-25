@@ -408,6 +408,15 @@ public class GamePlay {
                 playerInput = playerInput.replaceAll(" ", ""); //remove all spaces
                 continue;
             }
+            if (playerInput.toLowerCase().equals("help")) {
+                printHelpMenu();
+                
+                //Get new input
+                System.out.println("Which piece would you like to move? (Ex. e2 or e2 e4)");
+                playerInput = scnr.nextLine();
+                playerInput = playerInput.replaceAll(" ", ""); //remove all spaces
+                continue;
+            }
             if (playerInput.length() == 2) { //user only gave piece to move
                 pieceToMoveInput = playerInput;
                 locationToMoveInput = null; //resets this variable in case it has been initialized in a previous loop
@@ -450,7 +459,7 @@ public class GamePlay {
                     if (playerInput.length() == 2) {
                         locationToMoveInput = playerInput;
                         isProperLocation = isProperLocation(locationToMoveInput, pieceToMove);
-                    } else if (playerInput.length() == 4 || playerInput.toLowerCase().equals("resign")) {
+                    } else if (playerInput.length() == 4 || isExtraInputOption(playerInput.toLowerCase())) {
                         resetLoop = true;
                         break; //Goes back to the top of the while true loop to start the process over
                     } else {
@@ -473,7 +482,7 @@ public class GamePlay {
                 while (pieceToMove == null) {
                     playerInput = scnr.nextLine();
                     playerInput = playerInput.replaceAll(" ", ""); //remove all spaces
-                    if (playerInput.length() == 2 || playerInput.length() == 4 || playerInput.toLowerCase().equals("resign")) {
+                    if (playerInput.length() == 2 || playerInput.length() == 4 || isExtraInputOption(playerInput.toLowerCase())) {
                         resetLoop = true;
                         break;
                     } else {
@@ -494,7 +503,7 @@ public class GamePlay {
                     if (playerInput.length() == 2) {
                         locationToMoveInput = playerInput;
                         isProperLocation = isProperLocation(locationToMoveInput, pieceToMove);
-                    } else if (playerInput.length() == 4 || playerInput.toLowerCase().equals("resign")) {
+                    } else if (playerInput.length() == 4 || isExtraInputOption(playerInput.toLowerCase())) {
                         resetLoop = true;
                         break; //Goes back to the top of the while true loop to start the process over
                     }
@@ -649,5 +658,23 @@ public class GamePlay {
             }
         }
         return true; //Returns true if there are no legal moves
+    }
+
+    public void printHelpMenu() {
+        System.out.println("");
+        System.out.println("Basic move input    - enter the piece you want to move (ex. e2) and then the location to move (ex. e4)");
+        System.out.println("Advanced move input - combine piece and location to move in the same input (ex. e2 e4)");
+        System.out.println("Resignition         - type 'resign' to forfeit");
+        System.out.println("");
+    }
+
+    public boolean isExtraInputOption(String playerInput) {
+        switch (playerInput) {
+            case "help":
+            case "resign":
+                return true;
+            default:
+                return false;
+        }
     }
 }
