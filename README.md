@@ -8,7 +8,6 @@ The goal is to create a chess engine that can beat me.
 ## Features to Add
 
 * Game clock
-* Resignition
 * 3 fold repitition
 * 50 move rule
 * Draw by agreement
