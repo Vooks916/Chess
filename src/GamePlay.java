@@ -224,13 +224,8 @@ public class GamePlay {
         switch (playerInput.charAt(0)) {
             case 'a':
             case 'A':
-                if (player == 'W') {
-                    currentXLocation = 7;
-                    break;
-                } else {
-                    currentXLocation = 7;
-                    break;
-                }
+                currentXLocation = 7;
+                break;
             case 'b':
             case 'B':
                 currentXLocation = 6;
