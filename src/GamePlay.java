@@ -209,7 +209,7 @@ public class GamePlay {
     public void printBoard(char color) {
         if (color == 'W') {
             printWhiteBoard();
-        } else if (color == 'B') {
+        } else {
             printBlackBoard();
         }
     }
