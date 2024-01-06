@@ -11,10 +11,9 @@ The goal is to create a chess engine that can beat me.
 * 3 (and 5) fold repitition
 * 50 (and 75) move rule
 * Draw by agreement
-* Draw by insufficient material
+* Draw by dead position/insufficient material
 * Move history/transcript
 * Undo move
-* Draw by dead position/insufficient material
 
 ## Features to Add (Distant Future)
 
