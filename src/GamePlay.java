@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class GamePlay {
     Scanner scnr = new Scanner(System.in);
@@ -6,7 +7,8 @@ public class GamePlay {
     private static boolean movedViaEnPassant = false; //used on the rare occasion en passant actually happens
     private static boolean castledLastMove = false; //Used when a player castles to allow the rook to move as well
     public static boolean resigned = false;
-    
+    public static ArrayList<Piece[][]> previousPositions = new ArrayList<Piece[][]>(); //Keeps track of relevant past positions for threefold/fivefold repetition
+
     public void resetBoard() {
         //Make a clear board
         board = new Piece[8][8];
@@ -113,7 +115,7 @@ public class GamePlay {
                                 boardToPrint += "###########";
                             }
                         } else { //there is a piece on the square
-                            String backgroundColor = board[y][x].getBackgroundColor();  //Stores an ANSI escape code to change the outputed text beckground
+                            String backgroundColor = board[y][x].getBackgroundColor();  //Stores an ANSI escape code to change the outputted text background
                             String textColor = board[y][x].getTextColor();
                             String RESET = "\u001B[0m"; //ANSI escape code to reset colored backgrounds to normal
 
@@ -181,7 +183,7 @@ public class GamePlay {
                                 boardToPrint += "###########";
                             }
                         } else { //there is a piece on the square
-                            String backgroundColor = board[y][x].getBackgroundColor();  //Stores an ANSI escape code to change the outputed text beckground
+                            String backgroundColor = board[y][x].getBackgroundColor();  //Stores an ANSI escape code to change the outputted text background
                             String textColor = board[y][x].getTextColor();
                             String RESET = "\u001B[0m"; //ANSI escape code to reset colored backgrounds to normal
                             if ((firstSquareIsWhite && (x % 2 == 0)) || (!firstSquareIsWhite && (x % 2 != 0))) {    //Determines color of current square                                
@@ -659,7 +661,7 @@ public class GamePlay {
         System.out.println("");
         System.out.println("Basic move input    - enter the piece you want to move (ex. e2) and then the location to move (ex. e4)");
         System.out.println("Advanced move input - combine piece and location to move in the same input (ex. e2 e4)");
-        System.out.println("Resignition         - type 'resign' to forfeit");
+        System.out.println("Resignation         - type 'resign' to forfeit");
         System.out.println("");
     }
 
